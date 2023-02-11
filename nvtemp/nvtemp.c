@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
-#include "nvtemp.h"
+/* #include "nvtemp.h" */
 /* #include "/home/james/c/vargc.h" */
 
 /* #define COUNT_ARR(...) PP_NARG(__VA_ARGS__) */
