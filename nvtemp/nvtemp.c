@@ -23,7 +23,8 @@ int main()
 	struct timespec interval;
 	interval.tv_nsec = LOOP_INTERVAL;
 	char buf[57];
-	system("sudo nvidia-settings -a \"[gpu:0]/GPUFanControlState=1\"");
+	if (system("sudo nvidia-settings -a \"[gpu:0]/GPUFanControlState=1\""))
+		goto ERROR_SHUTDOWN;
 	for (;;) {
 	if (nvmlDeviceGetTemperature(device, NVML_TEMPERATURE_GPU, &temp) != NVML_SUCCESS)
 		goto ERROR_SHUTDOWN;
