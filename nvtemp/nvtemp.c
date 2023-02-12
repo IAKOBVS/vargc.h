@@ -30,8 +30,8 @@ int main()
 			tmp = temp;
 			sprintf(buf, "sudo nvidia-settings -a \"[fan:0]/GPUTargetFanSpeed=%d\"", speed);
 			system(buf);
-			nanosleep(&interval, NULL);
 		}
+		nanosleep(&interval, NULL);
 	}
 	if (nvmlShutdown() != NVML_SUCCESS) goto ERROR;
 	system("sudo nvidia-settings -a \"[gpu:0]/GPUFanControlState=0\"");
