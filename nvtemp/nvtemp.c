@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include "nvtemp.h"
 
-#include "nvidia/gdk/nvml.h"
+#include <nvidia/gdk/nvml.h>
 
 #define NANO_TO_MILI 1000000
 #define LOOP_INTERVAL 200 * NANO_TO_MILI
