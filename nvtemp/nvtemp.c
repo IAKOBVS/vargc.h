@@ -1,14 +1,13 @@
 #include <stdio.h>
-#include "nvidia/gdk/nvml.h"
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
 #include "nvtemp.h"
-/* #include "/home/james/c/vargc.h" */
 
-/* #define COUNT_ARR(...) PP_NARG(__VA_ARGS__) */
-#define NANO_MULTIPLIER 1000000
-#define LOOP_INTERVAL 200 * NANO_MULTIPLIER
+#include "nvidia/gdk/nvml.h"
+
+#define NANO_TO_MILI 1000000
+#define LOOP_INTERVAL 200 * NANO_TO_MILI
 
 int main()
 {
