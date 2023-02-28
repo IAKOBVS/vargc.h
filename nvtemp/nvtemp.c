@@ -2,50 +2,49 @@
 #include <stdlib.h>
 #include <time.h>
 #include "nvtemp.h"
-#include <assert.h>
-
 #include </opt/cuda/include/nvml.h>
+
+#if (defined(__GNUC__) && (__GNUC__ >= 3)) || (defined(__clang__) && __has_builtin(__builtin_expect))
+  #define likely(x) __builtin_expect(!!(x), 1)
+  #define unlikely(x) __builtin_expect(!!(x), 0)
+#else
+  #define likely(x) (x)
+  #define unlikely(x) (x)
+#endif
 
 #define NANO_TO_MILI 1000000
 #define LOOP_INTERVAL 200 * NANO_TO_MILI
 
-int nanosleep(const struct timespec *requested_time, struct timespec *remaining);
-
-int main()
+int main(void)
 {
 	struct timespec interval;
 	interval.tv_nsec = LOOP_INTERVAL;
 	nvmlDevice_t device;
-	if (system("sudo nvidia-settings -a \"[gpu:0]/GPUFanControlState=1\""))
+	if (unlikely(nvmlInit() != NVML_SUCCESS))
 		goto ERROR;
-	if (nvmlInit() == NVML_SUCCESS);
-	else goto ERROR;
-	if (nvmlDeviceGetHandleByIndex(0, &device) == NVML_SUCCESS);
-	else goto ERROR_SHUTDOWN;
+	if (unlikely(nvmlDeviceGetHandleByIndex(0, &device) != NVML_SUCCESS))
+		goto ERROR_SHUTDOWN;
+	unsigned int speed = 33;
 	int tmp = 0;
 	unsigned int temp;
-	unsigned int speed = 33;
-	for (char buf[57];;) {
-		if (nvmlDeviceGetTemperature(device, NVML_TEMPERATURE_GPU, (unsigned int *)&temp) == NVML_SUCCESS);
-		else goto ERROR_SHUTDOWN;
+	for (;;) {
+		if (unlikely(nvmlDeviceGetTemperature(device, NVML_TEMPERATURE_GPU, &temp) != NVML_SUCCESS))
+			goto ERROR_SHUTDOWN;
 		if (abs(tmp - (int)temp) > 2) {
 			switch (temp) { TEMP_THEN_SPEED(speed); }
-			sprintf(buf, "sudo nvidia-settings -a \"[fan:0]/GPUTargetFanSpeed=%d\"", speed);
-			system(buf);
+			if (unlikely(nvmlDeviceSetFanSpeed_v2(device, 0, speed)))
+				goto ERROR_SHUTDOWN;
 			tmp = temp;
 		}
 		nanosleep(&interval, NULL);
 	}
-	if (nvmlShutdown() == NVML_SUCCESS);
-	else goto ERROR_SHUTDOWN;
-	system("sudo nvidia-settings -a \"[gpu:0]/GPUFanControlState=0\"");
+	if (unlikely(nvmlShutdown() != NVML_SUCCESS))
+		goto ERROR_SHUTDOWN;
 	return 0;
 
 ERROR_SHUTDOWN:
 	nvmlShutdown();
 ERROR:
-	if (system("sudo nvidia-settings -a \"[gpu:0]/GPUFanControlState=0\""))
-		goto ERROR;
 	perror("");
 	return 1;
 }
