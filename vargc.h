@@ -1,0 +1,9108 @@
+#ifndef PP_MACROS_DEF_H
+
+#include "PP_ARRAY_COPY.h"
+#define PP_ISDIGIT(c) ((c) >= 48 && (c) <= 57)
+#define PP_GET_FIRST_ARG(...) PP_FIRST_ARG(__VA_ARGS__)
+#define PP_FIRST_ARG(first, ...) first
+#define PP_OTHER_ARGS(...) __VA_ARGS__
+#define PP_NARG(...) \
+         PP_NARG_(__VA_ARGS__,PP_RSEQ_N())
+#define PP_NARG_(...) \
+         PP_128TH_ARG(__VA_ARGS__)
+#define PP_128TH_ARG( \
+          _1, _2, _3, _4, _5, _6, _7, _8, _9,_10, \
+         _11,_12,_13,_14,_15,_16,_17,_18,_19,_20, \
+         _21,_22,_23,_24,_25,_26,_27,_28,_29,_30, \
+         _31,_32,_33,_34,_35,_36,_37,_38,_39,_40, \
+         _41,_42,_43,_44,_45,_46,_47,_48,_49,_50, \
+         _51,_52,_53,_54,_55,_56,_57,_58,_59,_60, \
+         _61,_62,_63,_64,_65,_66,_67,_68,_69,_70, \
+         _71,_72,_73,_74,_75,_76,_77,_78,_79,_80, \
+         _81,_82,_83,_84,_85,_86,_87,_88,_89,_90, \
+         _91,_92,_93,_94,_95,_96,_97,_98,_99,_100, \
+         _101,_102,_103,_104,_105,_106,_107,_108,_109,_110, \
+         _111,_112,_113,_114,_115,_116,_117,_118,_119,_120, \
+         _121,_122,_123,_124,_125,_126,_127,N,...) N
+#define PP_RSEQ_N() \
+         127,126,125,124,123,122,121,120, \
+         119,118,117,116,115,114,113,112,111,110, \
+         109,108,107,106,105,104,103,102,101,100, \
+         99,98,97,96,95,94,93,92,91,90, \
+         89,88,87,86,85,84,83,82,81,80, \
+         79,78,77,76,75,74,73,72,71,70, \
+         69,68,67,66,65,64,63,62,61,60, \
+         59,58,57,56,55,54,53,52,51,50, \
+         49,48,47,46,45,44,43,42,41,40, \
+         39,38,37,36,35,34,33,32,31,30, \
+         29,28,27,26,25,24,23,22,21,20, \
+         19,18,17,16,15,14,13,12,11,10, \
+         9,8,7,6,5,4,3,2,1,0
+#define STRING_LENGTHS(...) \
+    STRING_LENGTHS_(__VA_ARGS__, PP_RSEQ_N())
+#define STRING_LENGTHS_(...) \
+    PP_MAP(STRING_LENGTH, __VA_ARGS__)
+#define STRING_LENGTH(ARG) \
+    (sizeof((ARG))-1)
+#define PP_MAP(FUNC, ...) \
+    PP_MAP_(FUNC, PP_NARG(__VA_ARGS__), __VA_ARGS__)
+#define PP_MAP_(FUNC, N, ...) \
+    PP_MAP__(FUNC, N, __VA_ARGS__)
+#define PP_MAP__(FUNC, N, ...) \
+    PP_MAP_##N(FUNC, __VA_ARGS__)
+#define PP_MAP_0(FUNC, ...)
+
+#define PP_MAP_1(FUNC, A, ...) FUNC(A), PP_MAP_0(FUNC, __VA_ARGS__)
+#define PP_MAP_2(FUNC, A, ...) FUNC(A), PP_MAP_1(FUNC, __VA_ARGS__)
+#define PP_MAP_3(FUNC, A, ...) FUNC(A), PP_MAP_2(FUNC, __VA_ARGS__)
+#define PP_MAP_4(FUNC, A, ...) FUNC(A), PP_MAP_3(FUNC, __VA_ARGS__)
+#define PP_MAP_5(FUNC, A, ...) FUNC(A), PP_MAP_4(FUNC, __VA_ARGS__)
+#define PP_MAP_6(FUNC, A, ...) FUNC(A), PP_MAP_5(FUNC, __VA_ARGS__)
+#define PP_MAP_7(FUNC, A, ...) FUNC(A), PP_MAP_6(FUNC, __VA_ARGS__)
+#define PP_MAP_8(FUNC, A, ...) FUNC(A), PP_MAP_7(FUNC, __VA_ARGS__)
+#define PP_MAP_9(FUNC, A, ...) FUNC(A), PP_MAP_8(FUNC, __VA_ARGS__)
+#define PP_MAP_10(FUNC, A, ...) FUNC(A), PP_MAP_9(FUNC, __VA_ARGS__)
+#define PP_MAP_11(FUNC, A, ...) FUNC(A), PP_MAP_10(FUNC, __VA_ARGS__)
+#define PP_MAP_12(FUNC, A, ...) FUNC(A), PP_MAP_11(FUNC, __VA_ARGS__)
+#define PP_MAP_13(FUNC, A, ...) FUNC(A), PP_MAP_12(FUNC, __VA_ARGS__)
+#define PP_MAP_14(FUNC, A, ...) FUNC(A), PP_MAP_13(FUNC, __VA_ARGS__)
+#define PP_MAP_15(FUNC, A, ...) FUNC(A), PP_MAP_14(FUNC, __VA_ARGS__)
+#define PP_MAP_16(FUNC, A, ...) FUNC(A), PP_MAP_15(FUNC, __VA_ARGS__)
+#define PP_MAP_17(FUNC, A, ...) FUNC(A), PP_MAP_16(FUNC, __VA_ARGS__)
+#define PP_MAP_18(FUNC, A, ...) FUNC(A), PP_MAP_17(FUNC, __VA_ARGS__)
+#define PP_MAP_19(FUNC, A, ...) FUNC(A), PP_MAP_18(FUNC, __VA_ARGS__)
+#define PP_MAP_20(FUNC, A, ...) FUNC(A), PP_MAP_19(FUNC, __VA_ARGS__)
+#define PP_MAP_21(FUNC, A, ...) FUNC(A), PP_MAP_20(FUNC, __VA_ARGS__)
+#define PP_MAP_22(FUNC, A, ...) FUNC(A), PP_MAP_21(FUNC, __VA_ARGS__)
+#define PP_MAP_23(FUNC, A, ...) FUNC(A), PP_MAP_22(FUNC, __VA_ARGS__)
+#define PP_MAP_24(FUNC, A, ...) FUNC(A), PP_MAP_23(FUNC, __VA_ARGS__)
+#define PP_MAP_25(FUNC, A, ...) FUNC(A), PP_MAP_24(FUNC, __VA_ARGS__)
+#define PP_MAP_26(FUNC, A, ...) FUNC(A), PP_MAP_25(FUNC, __VA_ARGS__)
+#define PP_MAP_27(FUNC, A, ...) FUNC(A), PP_MAP_26(FUNC, __VA_ARGS__)
+#define PP_MAP_28(FUNC, A, ...) FUNC(A), PP_MAP_27(FUNC, __VA_ARGS__)
+#define PP_MAP_29(FUNC, A, ...) FUNC(A), PP_MAP_28(FUNC, __VA_ARGS__)
+#define PP_MAP_30(FUNC, A, ...) FUNC(A), PP_MAP_29(FUNC, __VA_ARGS__)
+#define PP_MAP_31(FUNC, A, ...) FUNC(A), PP_MAP_30(FUNC, __VA_ARGS__)
+#define PP_MAP_32(FUNC, A, ...) FUNC(A), PP_MAP_31(FUNC, __VA_ARGS__)
+#define PP_MAP_33(FUNC, A, ...) FUNC(A), PP_MAP_32(FUNC, __VA_ARGS__)
+#define PP_MAP_34(FUNC, A, ...) FUNC(A), PP_MAP_33(FUNC, __VA_ARGS__)
+#define PP_MAP_35(FUNC, A, ...) FUNC(A), PP_MAP_34(FUNC, __VA_ARGS__)
+#define PP_MAP_36(FUNC, A, ...) FUNC(A), PP_MAP_35(FUNC, __VA_ARGS__)
+#define PP_MAP_37(FUNC, A, ...) FUNC(A), PP_MAP_36(FUNC, __VA_ARGS__)
+#define PP_MAP_38(FUNC, A, ...) FUNC(A), PP_MAP_37(FUNC, __VA_ARGS__)
+#define PP_MAP_39(FUNC, A, ...) FUNC(A), PP_MAP_38(FUNC, __VA_ARGS__)
+#define PP_MAP_40(FUNC, A, ...) FUNC(A), PP_MAP_39(FUNC, __VA_ARGS__)
+#define PP_MAP_41(FUNC, A, ...) FUNC(A), PP_MAP_40(FUNC, __VA_ARGS__)
+#define PP_MAP_42(FUNC, A, ...) FUNC(A), PP_MAP_41(FUNC, __VA_ARGS__)
+#define PP_MAP_43(FUNC, A, ...) FUNC(A), PP_MAP_42(FUNC, __VA_ARGS__)
+#define PP_MAP_44(FUNC, A, ...) FUNC(A), PP_MAP_43(FUNC, __VA_ARGS__)
+#define PP_MAP_45(FUNC, A, ...) FUNC(A), PP_MAP_44(FUNC, __VA_ARGS__)
+#define PP_MAP_46(FUNC, A, ...) FUNC(A), PP_MAP_45(FUNC, __VA_ARGS__)
+#define PP_MAP_47(FUNC, A, ...) FUNC(A), PP_MAP_46(FUNC, __VA_ARGS__)
+#define PP_MAP_48(FUNC, A, ...) FUNC(A), PP_MAP_47(FUNC, __VA_ARGS__)
+#define PP_MAP_49(FUNC, A, ...) FUNC(A), PP_MAP_48(FUNC, __VA_ARGS__)
+#define PP_MAP_50(FUNC, A, ...) FUNC(A), PP_MAP_49(FUNC, __VA_ARGS__)
+#define PP_MAP_51(FUNC, A, ...) FUNC(A), PP_MAP_50(FUNC, __VA_ARGS__)
+#define PP_MAP_52(FUNC, A, ...) FUNC(A), PP_MAP_51(FUNC, __VA_ARGS__)
+#define PP_MAP_53(FUNC, A, ...) FUNC(A), PP_MAP_52(FUNC, __VA_ARGS__)
+#define PP_MAP_54(FUNC, A, ...) FUNC(A), PP_MAP_53(FUNC, __VA_ARGS__)
+#define PP_MAP_55(FUNC, A, ...) FUNC(A), PP_MAP_54(FUNC, __VA_ARGS__)
+#define PP_MAP_56(FUNC, A, ...) FUNC(A), PP_MAP_55(FUNC, __VA_ARGS__)
+#define PP_MAP_57(FUNC, A, ...) FUNC(A), PP_MAP_56(FUNC, __VA_ARGS__)
+#define PP_MAP_58(FUNC, A, ...) FUNC(A), PP_MAP_57(FUNC, __VA_ARGS__)
+#define PP_MAP_59(FUNC, A, ...) FUNC(A), PP_MAP_58(FUNC, __VA_ARGS__)
+#define PP_MAP_60(FUNC, A, ...) FUNC(A), PP_MAP_59(FUNC, __VA_ARGS__)
+#define PP_MAP_61(FUNC, A, ...) FUNC(A), PP_MAP_60(FUNC, __VA_ARGS__)
+#define PP_MAP_62(FUNC, A, ...) FUNC(A), PP_MAP_61(FUNC, __VA_ARGS__)
+#define PP_MAP_63(FUNC, A, ...) FUNC(A), PP_MAP_62(FUNC, __VA_ARGS__)
+#define PP_MAP_64(FUNC, A, ...) FUNC(A), PP_MAP_63(FUNC, __VA_ARGS__)
+#define PP_MAP_65(FUNC, A, ...) FUNC(A), PP_MAP_64(FUNC, __VA_ARGS__)
+#define PP_MAP_66(FUNC, A, ...) FUNC(A), PP_MAP_65(FUNC, __VA_ARGS__)
+#define PP_MAP_67(FUNC, A, ...) FUNC(A), PP_MAP_66(FUNC, __VA_ARGS__)
+#define PP_MAP_68(FUNC, A, ...) FUNC(A), PP_MAP_67(FUNC, __VA_ARGS__)
+#define PP_MAP_69(FUNC, A, ...) FUNC(A), PP_MAP_68(FUNC, __VA_ARGS__)
+#define PP_MAP_70(FUNC, A, ...) FUNC(A), PP_MAP_69(FUNC, __VA_ARGS__)
+#define PP_MAP_71(FUNC, A, ...) FUNC(A), PP_MAP_70(FUNC, __VA_ARGS__)
+#define PP_MAP_72(FUNC, A, ...) FUNC(A), PP_MAP_71(FUNC, __VA_ARGS__)
+#define PP_MAP_73(FUNC, A, ...) FUNC(A), PP_MAP_72(FUNC, __VA_ARGS__)
+#define PP_MAP_74(FUNC, A, ...) FUNC(A), PP_MAP_73(FUNC, __VA_ARGS__)
+#define PP_MAP_75(FUNC, A, ...) FUNC(A), PP_MAP_74(FUNC, __VA_ARGS__)
+#define PP_MAP_76(FUNC, A, ...) FUNC(A), PP_MAP_75(FUNC, __VA_ARGS__)
+#define PP_MAP_77(FUNC, A, ...) FUNC(A), PP_MAP_76(FUNC, __VA_ARGS__)
+#define PP_MAP_78(FUNC, A, ...) FUNC(A), PP_MAP_77(FUNC, __VA_ARGS__)
+#define PP_MAP_79(FUNC, A, ...) FUNC(A), PP_MAP_78(FUNC, __VA_ARGS__)
+#define PP_MAP_80(FUNC, A, ...) FUNC(A), PP_MAP_79(FUNC, __VA_ARGS__)
+#define PP_MAP_81(FUNC, A, ...) FUNC(A), PP_MAP_80(FUNC, __VA_ARGS__)
+#define PP_MAP_82(FUNC, A, ...) FUNC(A), PP_MAP_81(FUNC, __VA_ARGS__)
+#define PP_MAP_83(FUNC, A, ...) FUNC(A), PP_MAP_82(FUNC, __VA_ARGS__)
+#define PP_MAP_84(FUNC, A, ...) FUNC(A), PP_MAP_83(FUNC, __VA_ARGS__)
+#define PP_MAP_85(FUNC, A, ...) FUNC(A), PP_MAP_84(FUNC, __VA_ARGS__)
+#define PP_MAP_86(FUNC, A, ...) FUNC(A), PP_MAP_85(FUNC, __VA_ARGS__)
+#define PP_MAP_87(FUNC, A, ...) FUNC(A), PP_MAP_86(FUNC, __VA_ARGS__)
+#define PP_MAP_88(FUNC, A, ...) FUNC(A), PP_MAP_87(FUNC, __VA_ARGS__)
+#define PP_MAP_89(FUNC, A, ...) FUNC(A), PP_MAP_88(FUNC, __VA_ARGS__)
+#define PP_MAP_90(FUNC, A, ...) FUNC(A), PP_MAP_89(FUNC, __VA_ARGS__)
+#define PP_MAP_91(FUNC, A, ...) FUNC(A), PP_MAP_90(FUNC, __VA_ARGS__)
+#define PP_MAP_92(FUNC, A, ...) FUNC(A), PP_MAP_91(FUNC, __VA_ARGS__)
+#define PP_MAP_93(FUNC, A, ...) FUNC(A), PP_MAP_92(FUNC, __VA_ARGS__)
+#define PP_MAP_94(FUNC, A, ...) FUNC(A), PP_MAP_93(FUNC, __VA_ARGS__)
+#define PP_MAP_95(FUNC, A, ...) FUNC(A), PP_MAP_94(FUNC, __VA_ARGS__)
+#define PP_MAP_96(FUNC, A, ...) FUNC(A), PP_MAP_95(FUNC, __VA_ARGS__)
+#define PP_MAP_97(FUNC, A, ...) FUNC(A), PP_MAP_96(FUNC, __VA_ARGS__)
+#define PP_MAP_98(FUNC, A, ...) FUNC(A), PP_MAP_97(FUNC, __VA_ARGS__)
+#define PP_MAP_99(FUNC, A, ...) FUNC(A), PP_MAP_98(FUNC, __VA_ARGS__)
+#define PP_MAP_100(FUNC, A, ...) FUNC(A), PP_MAP_99(FUNC, __VA_ARGS__)
+#define PP_MAP_101(FUNC, A, ...) FUNC(A), PP_MAP_100(FUNC, __VA_ARGS__)
+#define PP_MAP_102(FUNC, A, ...) FUNC(A), PP_MAP_101(FUNC, __VA_ARGS__)
+#define PP_MAP_103(FUNC, A, ...) FUNC(A), PP_MAP_102(FUNC, __VA_ARGS__)
+#define PP_MAP_104(FUNC, A, ...) FUNC(A), PP_MAP_103(FUNC, __VA_ARGS__)
+#define PP_MAP_105(FUNC, A, ...) FUNC(A), PP_MAP_104(FUNC, __VA_ARGS__)
+#define PP_MAP_106(FUNC, A, ...) FUNC(A), PP_MAP_105(FUNC, __VA_ARGS__)
+#define PP_MAP_107(FUNC, A, ...) FUNC(A), PP_MAP_106(FUNC, __VA_ARGS__)
+#define PP_MAP_108(FUNC, A, ...) FUNC(A), PP_MAP_107(FUNC, __VA_ARGS__)
+#define PP_MAP_109(FUNC, A, ...) FUNC(A), PP_MAP_108(FUNC, __VA_ARGS__)
+#define PP_MAP_110(FUNC, A, ...) FUNC(A), PP_MAP_109(FUNC, __VA_ARGS__)
+#define PP_MAP_111(FUNC, A, ...) FUNC(A), PP_MAP_110(FUNC, __VA_ARGS__)
+#define PP_MAP_112(FUNC, A, ...) FUNC(A), PP_MAP_111(FUNC, __VA_ARGS__)
+#define PP_MAP_113(FUNC, A, ...) FUNC(A), PP_MAP_112(FUNC, __VA_ARGS__)
+#define PP_MAP_114(FUNC, A, ...) FUNC(A), PP_MAP_113(FUNC, __VA_ARGS__)
+#define PP_MAP_115(FUNC, A, ...) FUNC(A), PP_MAP_114(FUNC, __VA_ARGS__)
+#define PP_MAP_116(FUNC, A, ...) FUNC(A), PP_MAP_115(FUNC, __VA_ARGS__)
+#define PP_MAP_117(FUNC, A, ...) FUNC(A), PP_MAP_116(FUNC, __VA_ARGS__)
+#define PP_MAP_118(FUNC, A, ...) FUNC(A), PP_MAP_117(FUNC, __VA_ARGS__)
+#define PP_MAP_119(FUNC, A, ...) FUNC(A), PP_MAP_118(FUNC, __VA_ARGS__)
+#define PP_MAP_120(FUNC, A, ...) FUNC(A), PP_MAP_119(FUNC, __VA_ARGS__)
+#define PP_MAP_121(FUNC, A, ...) FUNC(A), PP_MAP_120(FUNC, __VA_ARGS__)
+#define PP_MAP_122(FUNC, A, ...) FUNC(A), PP_MAP_121(FUNC, __VA_ARGS__)
+#define PP_MAP_123(FUNC, A, ...) FUNC(A), PP_MAP_122(FUNC, __VA_ARGS__)
+#define PP_MAP_124(FUNC, A, ...) FUNC(A), PP_MAP_123(FUNC, __VA_ARGS__)
+#define PP_MAP_125(FUNC, A, ...) FUNC(A), PP_MAP_124(FUNC, __VA_ARGS__)
+#define PP_MAP_126(FUNC, A, ...) FUNC(A), PP_MAP_125(FUNC, __VA_ARGS__)
+#define PP_MAP_127(FUNC, A, ...) FUNC(A), PP_MAP_126(FUNC, __VA_ARGS__)
+#define PP_MAP_128(FUNC, A, ...) FUNC(A), PP_MAP_127(FUNC, __VA_ARGS__)
+
+#define PP_PROCESS_ARGS127(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS126(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS126(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS125(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS125(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS124(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS124(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS123(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS123(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS122(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS122(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS121(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS121(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS120(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS120(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS119(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS119(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS118(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS118(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS117(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS117(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS116(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS116(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS115(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS115(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS114(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS114(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS113(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS113(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS112(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS112(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS111(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS111(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS110(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS110(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS109(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS109(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS108(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS108(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS107(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS107(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS106(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS106(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS105(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS105(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS104(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS104(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS103(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS103(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS102(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS102(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS101(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS101(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS100(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS100(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS99(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS99(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS98(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS98(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS97(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS97(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS96(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS96(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS95(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS95(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS94(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS94(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS93(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS93(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS92(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS92(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS91(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS91(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS90(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS90(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS89(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS89(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS88(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS88(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS87(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS87(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS86(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS86(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS85(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS85(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS84(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS84(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS83(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS83(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS82(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS82(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS81(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS81(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS80(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS80(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS79(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS79(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS78(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS78(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS77(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS77(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS76(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS76(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS75(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS75(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS74(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS74(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS73(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS73(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS72(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS72(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS71(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS71(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS70(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS70(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS69(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS69(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS68(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS68(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS67(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS67(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS66(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS66(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS65(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS65(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS64(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS64(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS63(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS63(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS62(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS62(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS61(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS61(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS60(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS60(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS59(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS59(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS58(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS58(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS57(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS57(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS56(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS56(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS55(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS55(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS54(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS54(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS53(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS53(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS52(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS52(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS51(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS51(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS50(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS50(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS49(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS49(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS48(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS48(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS47(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS47(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS46(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS46(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS45(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS45(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS44(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS44(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS43(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS43(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS42(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS42(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS41(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS41(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS40(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS40(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS39(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS39(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS38(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS38(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS37(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS37(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS36(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS36(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS35(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS35(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS34(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS34(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS33(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS33(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS32(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS32(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS31(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS31(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS30(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS30(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS29(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS29(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS28(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS28(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS27(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS27(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS26(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS26(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS25(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS25(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS24(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS24(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS23(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS23(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS22(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS22(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS21(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS21(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS20(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS20(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS19(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS19(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS18(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS18(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS17(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS17(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS16(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS16(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS15(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS15(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS14(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS14(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS13(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS13(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS12(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS12(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS11(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS11(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS10(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS10(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS9(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS9(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS8(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS8(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS7(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS7(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS6(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS6(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS5(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS5(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS4(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS4(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS3(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS3(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS2(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS2(PP_PROCESS_ARG, arg, ...) PP_PROCESS_ARG(arg) PP_PROCESS_ARGS1(PP_PROCESS_ARG, __VA_ARGS__)
+#define PP_PROCESS_ARGS1(PP_PROCESS_ARG, arg) PP_PROCESS_ARG(arg)
+
+#define PP_PROCESS_ARGS_N(N, ...)                        \
+	PP_CONCATENATE(PP_PROCESS_ARGS_, N)(__VA_ARGS__)
+
+#define PP_CONCATENATE(A, B) \
+	PP_CONCATENATE_(A, B)
+
+#define PP_CONCATENATE_(A, B) \
+    A##B
+
+#define PP_PROCESS_ARG_FUNC(FUNC, arg) \
+    FUNC(arg)
+
+#define PP_ITERATE(FUNC, ...)                                           \
+	PP_EXPAND(PP_PROCESS_ARGS_1(PP_PROCESS_ARG_FUNC, FUNC, __VA_ARGS__))
+
+#define PP_EXPAND(x) x
+
+#define pp_cout(x) _Generic((x),   \
+	char: printf("%c\n", x),   \
+	char*: printf("%s\n", x),  \
+	int: printf("%d\n", x),    \
+	double: printf("%f\n", x), \
+	float: printf("%f\n", x),  \
+	void*: printf("%p\n", x)   \
+	)
+
+#define PP_LOOP_ARGS_START(do_thing, num_args, ...) do_thing PP_EXTRACT_ARGS_##num_args(__VA_ARGS__)
+#define PP_EXTRACT_ARGS(num_args, ...) PP_EXTRACT_ARGS_##num_args(__VA_ARGS__)
+#define PP_EXTRACT_ARGS_0(arg0, ...) arg0
+#define PP_EXTRACT_ARGS_1(arg0, arg1, ...) arg1
+#define PP_EXTRACT_ARGS_2(arg0, arg1, arg2, ...) arg2
+#define PP_EXTRACT_ARGS_3(arg0, arg1, arg2, arg3, ...) arg3
+#define PP_EXTRACT_ARGS_4(arg0, arg1, arg2, arg3, arg4, ...) arg4
+#define PP_EXTRACT_ARGS_5(arg0, arg1, arg2, arg3, arg4, arg5, ...) arg5
+#define PP_EXTRACT_ARGS_6(arg0, arg1, arg2, arg3, arg4, arg5, arg6, ...) arg6
+#define PP_EXTRACT_ARGS_7(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, ...) arg7
+#define PP_EXTRACT_ARGS_8(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, ...) arg8
+#define PP_EXTRACT_ARGS_9(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, ...) arg9
+#define PP_EXTRACT_ARGS_10(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, ...) arg10
+#define PP_EXTRACT_ARGS_11(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, ...) arg11
+#define PP_EXTRACT_ARGS_12(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, ...) arg12
+#define PP_EXTRACT_ARGS_13(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, ...) arg13
+#define PP_EXTRACT_ARGS_14(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, ...) arg14
+#define PP_EXTRACT_ARGS_15(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, ...) arg15
+#define PP_EXTRACT_ARGS_16(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, ...) arg16
+#define PP_EXTRACT_ARGS_17(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, ...) arg17
+#define PP_EXTRACT_ARGS_18(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, ...) arg18
+#define PP_EXTRACT_ARGS_19(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, ...) arg19
+#define PP_EXTRACT_ARGS_20(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, ...) arg20
+#define PP_EXTRACT_ARGS_21(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, ...) arg21
+#define PP_EXTRACT_ARGS_22(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, ...) arg22
+#define PP_EXTRACT_ARGS_23(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, ...) arg23
+#define PP_EXTRACT_ARGS_24(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, ...) arg24
+#define PP_EXTRACT_ARGS_25(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, ...) arg25
+#define PP_EXTRACT_ARGS_26(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, ...) arg26
+#define PP_EXTRACT_ARGS_27(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, ...) arg27
+#define PP_EXTRACT_ARGS_28(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, ...) arg28
+#define PP_EXTRACT_ARGS_29(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, ...) arg29
+#define PP_EXTRACT_ARGS_30(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, ...) arg30
+#define PP_EXTRACT_ARGS_31(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, ...) arg31
+#define PP_EXTRACT_ARGS_32(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, ...) arg32
+#define PP_EXTRACT_ARGS_33(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, ...) arg33
+#define PP_EXTRACT_ARGS_34(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, ...) arg34
+#define PP_EXTRACT_ARGS_35(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, ...) arg35
+#define PP_EXTRACT_ARGS_36(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, ...) arg36
+#define PP_EXTRACT_ARGS_37(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, ...) arg37
+#define PP_EXTRACT_ARGS_38(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, ...) arg38
+#define PP_EXTRACT_ARGS_39(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, ...) arg39
+#define PP_EXTRACT_ARGS_40(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, ...) arg40
+#define PP_EXTRACT_ARGS_41(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, ...) arg41
+#define PP_EXTRACT_ARGS_42(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, ...) arg42
+#define PP_EXTRACT_ARGS_43(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, ...) arg43
+#define PP_EXTRACT_ARGS_44(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, ...) arg44
+#define PP_EXTRACT_ARGS_45(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, ...) arg45
+#define PP_EXTRACT_ARGS_46(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, ...) arg46
+#define PP_EXTRACT_ARGS_47(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, ...) arg47
+#define PP_EXTRACT_ARGS_48(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, ...) arg48
+#define PP_EXTRACT_ARGS_49(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, ...) arg49
+#define PP_EXTRACT_ARGS_50(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, ...) arg50
+#define PP_EXTRACT_ARGS_51(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, ...) arg51
+#define PP_EXTRACT_ARGS_52(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, ...) arg52
+#define PP_EXTRACT_ARGS_53(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, ...) arg53
+#define PP_EXTRACT_ARGS_54(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, ...) arg54
+#define PP_EXTRACT_ARGS_55(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, ...) arg55
+#define PP_EXTRACT_ARGS_56(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, ...) arg56
+#define PP_EXTRACT_ARGS_57(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, ...) arg57
+#define PP_EXTRACT_ARGS_58(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, ...) arg58
+#define PP_EXTRACT_ARGS_59(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, ...) arg59
+#define PP_EXTRACT_ARGS_60(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, ...) arg60
+#define PP_EXTRACT_ARGS_61(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, ...) arg61
+#define PP_EXTRACT_ARGS_62(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, ...) arg62
+#define PP_EXTRACT_ARGS_63(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, ...) arg63
+#define PP_EXTRACT_ARGS_64(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, ...) arg64
+#define PP_EXTRACT_ARGS_65(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, ...) arg65
+#define PP_EXTRACT_ARGS_66(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, ...) arg66
+#define PP_EXTRACT_ARGS_67(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, ...) arg67
+#define PP_EXTRACT_ARGS_68(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, ...) arg68
+#define PP_EXTRACT_ARGS_69(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, ...) arg69
+#define PP_EXTRACT_ARGS_70(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, ...) arg70
+#define PP_EXTRACT_ARGS_71(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, ...) arg71
+#define PP_EXTRACT_ARGS_72(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, ...) arg72
+#define PP_EXTRACT_ARGS_73(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, ...) arg73
+#define PP_EXTRACT_ARGS_74(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, ...) arg74
+#define PP_EXTRACT_ARGS_75(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, ...) arg75
+#define PP_EXTRACT_ARGS_76(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, ...) arg76
+#define PP_EXTRACT_ARGS_77(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, ...) arg77
+#define PP_EXTRACT_ARGS_78(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, ...) arg78
+#define PP_EXTRACT_ARGS_79(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, ...) arg79
+#define PP_EXTRACT_ARGS_80(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, ...) arg80
+#define PP_EXTRACT_ARGS_81(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, ...) arg81
+#define PP_EXTRACT_ARGS_82(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, ...) arg82
+#define PP_EXTRACT_ARGS_83(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, ...) arg83
+#define PP_EXTRACT_ARGS_84(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, ...) arg84
+#define PP_EXTRACT_ARGS_85(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, ...) arg85
+#define PP_EXTRACT_ARGS_86(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, ...) arg86
+#define PP_EXTRACT_ARGS_87(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, ...) arg87
+#define PP_EXTRACT_ARGS_88(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, ...) arg88
+#define PP_EXTRACT_ARGS_89(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, ...) arg89
+#define PP_EXTRACT_ARGS_90(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, ...) arg90
+#define PP_EXTRACT_ARGS_91(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, ...) arg91
+#define PP_EXTRACT_ARGS_92(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, ...) arg92
+#define PP_EXTRACT_ARGS_93(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, ...) arg93
+#define PP_EXTRACT_ARGS_94(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, ...) arg94
+#define PP_EXTRACT_ARGS_95(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, ...) arg95
+#define PP_EXTRACT_ARGS_96(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, ...) arg96
+#define PP_EXTRACT_ARGS_97(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, ...) arg97
+#define PP_EXTRACT_ARGS_98(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, ...) arg98
+#define PP_EXTRACT_ARGS_99(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, ...) arg99
+#define PP_EXTRACT_ARGS_100(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, ...) arg100
+#define PP_EXTRACT_ARGS_101(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, arg101, ...) arg101
+#define PP_EXTRACT_ARGS_102(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, arg101, arg102, ...) arg102
+#define PP_EXTRACT_ARGS_103(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, arg101, arg102, arg103, ...) arg103
+#define PP_EXTRACT_ARGS_104(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, arg101, arg102, arg103, arg104, ...) arg104
+#define PP_EXTRACT_ARGS_105(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, arg101, arg102, arg103, arg104, arg105, ...) arg105
+#define PP_EXTRACT_ARGS_106(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, arg101, arg102, arg103, arg104, arg105, arg106, ...) arg106
+#define PP_EXTRACT_ARGS_107(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, arg101, arg102, arg103, arg104, arg105, arg106, arg107, ...) arg107
+#define PP_EXTRACT_ARGS_108(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, arg101, arg102, arg103, arg104, arg105, arg106, arg107, arg108, ...) arg108
+#define PP_EXTRACT_ARGS_109(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, arg101, arg102, arg103, arg104, arg105, arg106, arg107, arg108, arg109, ...) arg109
+#define PP_EXTRACT_ARGS_110(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, arg101, arg102, arg103, arg104, arg105, arg106, arg107, arg108, arg109, arg110, ...) arg110
+#define PP_EXTRACT_ARGS_111(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, arg101, arg102, arg103, arg104, arg105, arg106, arg107, arg108, arg109, arg110, arg111, ...) arg111
+#define PP_EXTRACT_ARGS_112(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, arg101, arg102, arg103, arg104, arg105, arg106, arg107, arg108, arg109, arg110, arg111, arg112, ...) arg112
+#define PP_EXTRACT_ARGS_113(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, arg101, arg102, arg103, arg104, arg105, arg106, arg107, arg108, arg109, arg110, arg111, arg112, arg113, ...) arg113
+#define PP_EXTRACT_ARGS_114(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, arg101, arg102, arg103, arg104, arg105, arg106, arg107, arg108, arg109, arg110, arg111, arg112, arg113, arg114, ...) arg114
+#define PP_EXTRACT_ARGS_115(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, arg101, arg102, arg103, arg104, arg105, arg106, arg107, arg108, arg109, arg110, arg111, arg112, arg113, arg114, arg115, ...) arg115
+#define PP_EXTRACT_ARGS_116(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, arg101, arg102, arg103, arg104, arg105, arg106, arg107, arg108, arg109, arg110, arg111, arg112, arg113, arg114, arg115, arg116, ...) arg116
+#define PP_EXTRACT_ARGS_117(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, arg101, arg102, arg103, arg104, arg105, arg106, arg107, arg108, arg109, arg110, arg111, arg112, arg113, arg114, arg115, arg116, arg117, ...) arg117
+#define PP_EXTRACT_ARGS_118(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, arg101, arg102, arg103, arg104, arg105, arg106, arg107, arg108, arg109, arg110, arg111, arg112, arg113, arg114, arg115, arg116, arg117, arg118, ...) arg118
+#define PP_EXTRACT_ARGS_119(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, arg101, arg102, arg103, arg104, arg105, arg106, arg107, arg108, arg109, arg110, arg111, arg112, arg113, arg114, arg115, arg116, arg117, arg118, arg119, ...) arg119
+#define PP_EXTRACT_ARGS_120(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, arg101, arg102, arg103, arg104, arg105, arg106, arg107, arg108, arg109, arg110, arg111, arg112, arg113, arg114, arg115, arg116, arg117, arg118, arg119, arg120, ...) arg120
+#define PP_EXTRACT_ARGS_121(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, arg101, arg102, arg103, arg104, arg105, arg106, arg107, arg108, arg109, arg110, arg111, arg112, arg113, arg114, arg115, arg116, arg117, arg118, arg119, arg120, arg121, ...) arg121
+#define PP_EXTRACT_ARGS_122(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, arg101, arg102, arg103, arg104, arg105, arg106, arg107, arg108, arg109, arg110, arg111, arg112, arg113, arg114, arg115, arg116, arg117, arg118, arg119, arg120, arg121, arg122, ...) arg122
+#define PP_EXTRACT_ARGS_123(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, arg101, arg102, arg103, arg104, arg105, arg106, arg107, arg108, arg109, arg110, arg111, arg112, arg113, arg114, arg115, arg116, arg117, arg118, arg119, arg120, arg121, arg122, arg123, ...) arg123
+#define PP_EXTRACT_ARGS_124(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, arg101, arg102, arg103, arg104, arg105, arg106, arg107, arg108, arg109, arg110, arg111, arg112, arg113, arg114, arg115, arg116, arg117, arg118, arg119, arg120, arg121, arg122, arg123, arg124, ...) arg124
+#define PP_EXTRACT_ARGS_125(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, arg101, arg102, arg103, arg104, arg105, arg106, arg107, arg108, arg109, arg110, arg111, arg112, arg113, arg114, arg115, arg116, arg117, arg118, arg119, arg120, arg121, arg122, arg123, arg124, arg125, ...) arg125
+#define PP_EXTRACT_ARGS_126(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, arg101, arg102, arg103, arg104, arg105, arg106, arg107, arg108, arg109, arg110, arg111, arg112, arg113, arg114, arg115, arg116, arg117, arg118, arg119, arg120, arg121, arg122, arg123, arg124, arg125, arg126, ...) arg126
+#define PP_EXTRACT_ARGS_127(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, arg21, arg22, arg23, arg24, arg25, arg26, arg27, arg28, arg29, arg30, arg31, arg32, arg33, arg34, arg35, arg36, arg37, arg38, arg39, arg40, arg41, arg42, arg43, arg44, arg45, arg46, arg47, arg48, arg49, arg50, arg51, arg52, arg53, arg54, arg55, arg56, arg57, arg58, arg59, arg60, arg61, arg62, arg63, arg64, arg65, arg66, arg67, arg68, arg69, arg70, arg71, arg72, arg73, arg74, arg75, arg76, arg77, arg78, arg79, arg80, arg81, arg82, arg83, arg84, arg85, arg86, arg87, arg88, arg89, arg90, arg91, arg92, arg93, arg94, arg95, arg96, arg97, arg98, arg99, arg100, arg101, arg102, arg103, arg104, arg105, arg106, arg107, arg108, arg109, arg110, arg111, arg112, arg113, arg114, arg115, arg116, arg117, arg118, arg119, arg120, arg121, arg122, arg123, arg124, arg125, arg126, arg127, ...) arg127
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_1(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_2(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_3(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_4(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_5(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_6(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_7(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_8(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_9(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_10(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_11(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_12(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_13(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_14(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_15(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_16(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_17(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_18(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_19(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_20(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_21(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_22(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_23(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_24(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_25(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_26(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_27(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_28(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_29(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_30(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_31(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_32(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_33(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_34(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_35(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_36(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_37(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_38(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_39(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_40(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_41(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_42(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_43(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_44(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_45(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_46(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_47(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_48(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_49(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_50(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_51(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_52(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_53(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_54(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_55(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_56(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_57(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_58(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_59(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_60(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_61(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_62(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_63(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_64(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_65(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_66(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_67(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_68(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_69(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_70(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_71(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_72(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_73(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_74(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_75(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_76(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_77(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_78(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_79(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_80(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_81(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_82(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_83(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_84(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_85(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_86(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_87(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_88(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_89(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_90(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_91(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_92(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_93(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_94(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_95(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_96(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_97(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_98(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_99(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_100(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_101(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        array[start_index+100] = PP_EXTRACT_ARGS(100, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_102(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        array[start_index+100] = PP_EXTRACT_ARGS(100, __VA_ARGS__), \
+        array[start_index+101] = PP_EXTRACT_ARGS(101, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_103(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        array[start_index+100] = PP_EXTRACT_ARGS(100, __VA_ARGS__), \
+        array[start_index+101] = PP_EXTRACT_ARGS(101, __VA_ARGS__), \
+        array[start_index+102] = PP_EXTRACT_ARGS(102, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_104(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        array[start_index+100] = PP_EXTRACT_ARGS(100, __VA_ARGS__), \
+        array[start_index+101] = PP_EXTRACT_ARGS(101, __VA_ARGS__), \
+        array[start_index+102] = PP_EXTRACT_ARGS(102, __VA_ARGS__), \
+        array[start_index+103] = PP_EXTRACT_ARGS(103, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_105(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        array[start_index+100] = PP_EXTRACT_ARGS(100, __VA_ARGS__), \
+        array[start_index+101] = PP_EXTRACT_ARGS(101, __VA_ARGS__), \
+        array[start_index+102] = PP_EXTRACT_ARGS(102, __VA_ARGS__), \
+        array[start_index+103] = PP_EXTRACT_ARGS(103, __VA_ARGS__), \
+        array[start_index+104] = PP_EXTRACT_ARGS(104, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_106(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        array[start_index+100] = PP_EXTRACT_ARGS(100, __VA_ARGS__), \
+        array[start_index+101] = PP_EXTRACT_ARGS(101, __VA_ARGS__), \
+        array[start_index+102] = PP_EXTRACT_ARGS(102, __VA_ARGS__), \
+        array[start_index+103] = PP_EXTRACT_ARGS(103, __VA_ARGS__), \
+        array[start_index+104] = PP_EXTRACT_ARGS(104, __VA_ARGS__), \
+        array[start_index+105] = PP_EXTRACT_ARGS(105, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_107(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        array[start_index+100] = PP_EXTRACT_ARGS(100, __VA_ARGS__), \
+        array[start_index+101] = PP_EXTRACT_ARGS(101, __VA_ARGS__), \
+        array[start_index+102] = PP_EXTRACT_ARGS(102, __VA_ARGS__), \
+        array[start_index+103] = PP_EXTRACT_ARGS(103, __VA_ARGS__), \
+        array[start_index+104] = PP_EXTRACT_ARGS(104, __VA_ARGS__), \
+        array[start_index+105] = PP_EXTRACT_ARGS(105, __VA_ARGS__), \
+        array[start_index+106] = PP_EXTRACT_ARGS(106, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_108(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        array[start_index+100] = PP_EXTRACT_ARGS(100, __VA_ARGS__), \
+        array[start_index+101] = PP_EXTRACT_ARGS(101, __VA_ARGS__), \
+        array[start_index+102] = PP_EXTRACT_ARGS(102, __VA_ARGS__), \
+        array[start_index+103] = PP_EXTRACT_ARGS(103, __VA_ARGS__), \
+        array[start_index+104] = PP_EXTRACT_ARGS(104, __VA_ARGS__), \
+        array[start_index+105] = PP_EXTRACT_ARGS(105, __VA_ARGS__), \
+        array[start_index+106] = PP_EXTRACT_ARGS(106, __VA_ARGS__), \
+        array[start_index+107] = PP_EXTRACT_ARGS(107, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_109(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        array[start_index+100] = PP_EXTRACT_ARGS(100, __VA_ARGS__), \
+        array[start_index+101] = PP_EXTRACT_ARGS(101, __VA_ARGS__), \
+        array[start_index+102] = PP_EXTRACT_ARGS(102, __VA_ARGS__), \
+        array[start_index+103] = PP_EXTRACT_ARGS(103, __VA_ARGS__), \
+        array[start_index+104] = PP_EXTRACT_ARGS(104, __VA_ARGS__), \
+        array[start_index+105] = PP_EXTRACT_ARGS(105, __VA_ARGS__), \
+        array[start_index+106] = PP_EXTRACT_ARGS(106, __VA_ARGS__), \
+        array[start_index+107] = PP_EXTRACT_ARGS(107, __VA_ARGS__), \
+        array[start_index+108] = PP_EXTRACT_ARGS(108, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_110(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        array[start_index+100] = PP_EXTRACT_ARGS(100, __VA_ARGS__), \
+        array[start_index+101] = PP_EXTRACT_ARGS(101, __VA_ARGS__), \
+        array[start_index+102] = PP_EXTRACT_ARGS(102, __VA_ARGS__), \
+        array[start_index+103] = PP_EXTRACT_ARGS(103, __VA_ARGS__), \
+        array[start_index+104] = PP_EXTRACT_ARGS(104, __VA_ARGS__), \
+        array[start_index+105] = PP_EXTRACT_ARGS(105, __VA_ARGS__), \
+        array[start_index+106] = PP_EXTRACT_ARGS(106, __VA_ARGS__), \
+        array[start_index+107] = PP_EXTRACT_ARGS(107, __VA_ARGS__), \
+        array[start_index+108] = PP_EXTRACT_ARGS(108, __VA_ARGS__), \
+        array[start_index+109] = PP_EXTRACT_ARGS(109, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_111(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        array[start_index+100] = PP_EXTRACT_ARGS(100, __VA_ARGS__), \
+        array[start_index+101] = PP_EXTRACT_ARGS(101, __VA_ARGS__), \
+        array[start_index+102] = PP_EXTRACT_ARGS(102, __VA_ARGS__), \
+        array[start_index+103] = PP_EXTRACT_ARGS(103, __VA_ARGS__), \
+        array[start_index+104] = PP_EXTRACT_ARGS(104, __VA_ARGS__), \
+        array[start_index+105] = PP_EXTRACT_ARGS(105, __VA_ARGS__), \
+        array[start_index+106] = PP_EXTRACT_ARGS(106, __VA_ARGS__), \
+        array[start_index+107] = PP_EXTRACT_ARGS(107, __VA_ARGS__), \
+        array[start_index+108] = PP_EXTRACT_ARGS(108, __VA_ARGS__), \
+        array[start_index+109] = PP_EXTRACT_ARGS(109, __VA_ARGS__), \
+        array[start_index+110] = PP_EXTRACT_ARGS(110, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_112(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        array[start_index+100] = PP_EXTRACT_ARGS(100, __VA_ARGS__), \
+        array[start_index+101] = PP_EXTRACT_ARGS(101, __VA_ARGS__), \
+        array[start_index+102] = PP_EXTRACT_ARGS(102, __VA_ARGS__), \
+        array[start_index+103] = PP_EXTRACT_ARGS(103, __VA_ARGS__), \
+        array[start_index+104] = PP_EXTRACT_ARGS(104, __VA_ARGS__), \
+        array[start_index+105] = PP_EXTRACT_ARGS(105, __VA_ARGS__), \
+        array[start_index+106] = PP_EXTRACT_ARGS(106, __VA_ARGS__), \
+        array[start_index+107] = PP_EXTRACT_ARGS(107, __VA_ARGS__), \
+        array[start_index+108] = PP_EXTRACT_ARGS(108, __VA_ARGS__), \
+        array[start_index+109] = PP_EXTRACT_ARGS(109, __VA_ARGS__), \
+        array[start_index+110] = PP_EXTRACT_ARGS(110, __VA_ARGS__), \
+        array[start_index+111] = PP_EXTRACT_ARGS(111, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_113(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        array[start_index+100] = PP_EXTRACT_ARGS(100, __VA_ARGS__), \
+        array[start_index+101] = PP_EXTRACT_ARGS(101, __VA_ARGS__), \
+        array[start_index+102] = PP_EXTRACT_ARGS(102, __VA_ARGS__), \
+        array[start_index+103] = PP_EXTRACT_ARGS(103, __VA_ARGS__), \
+        array[start_index+104] = PP_EXTRACT_ARGS(104, __VA_ARGS__), \
+        array[start_index+105] = PP_EXTRACT_ARGS(105, __VA_ARGS__), \
+        array[start_index+106] = PP_EXTRACT_ARGS(106, __VA_ARGS__), \
+        array[start_index+107] = PP_EXTRACT_ARGS(107, __VA_ARGS__), \
+        array[start_index+108] = PP_EXTRACT_ARGS(108, __VA_ARGS__), \
+        array[start_index+109] = PP_EXTRACT_ARGS(109, __VA_ARGS__), \
+        array[start_index+110] = PP_EXTRACT_ARGS(110, __VA_ARGS__), \
+        array[start_index+111] = PP_EXTRACT_ARGS(111, __VA_ARGS__), \
+        array[start_index+112] = PP_EXTRACT_ARGS(112, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_114(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        array[start_index+100] = PP_EXTRACT_ARGS(100, __VA_ARGS__), \
+        array[start_index+101] = PP_EXTRACT_ARGS(101, __VA_ARGS__), \
+        array[start_index+102] = PP_EXTRACT_ARGS(102, __VA_ARGS__), \
+        array[start_index+103] = PP_EXTRACT_ARGS(103, __VA_ARGS__), \
+        array[start_index+104] = PP_EXTRACT_ARGS(104, __VA_ARGS__), \
+        array[start_index+105] = PP_EXTRACT_ARGS(105, __VA_ARGS__), \
+        array[start_index+106] = PP_EXTRACT_ARGS(106, __VA_ARGS__), \
+        array[start_index+107] = PP_EXTRACT_ARGS(107, __VA_ARGS__), \
+        array[start_index+108] = PP_EXTRACT_ARGS(108, __VA_ARGS__), \
+        array[start_index+109] = PP_EXTRACT_ARGS(109, __VA_ARGS__), \
+        array[start_index+110] = PP_EXTRACT_ARGS(110, __VA_ARGS__), \
+        array[start_index+111] = PP_EXTRACT_ARGS(111, __VA_ARGS__), \
+        array[start_index+112] = PP_EXTRACT_ARGS(112, __VA_ARGS__), \
+        array[start_index+113] = PP_EXTRACT_ARGS(113, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_115(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        array[start_index+100] = PP_EXTRACT_ARGS(100, __VA_ARGS__), \
+        array[start_index+101] = PP_EXTRACT_ARGS(101, __VA_ARGS__), \
+        array[start_index+102] = PP_EXTRACT_ARGS(102, __VA_ARGS__), \
+        array[start_index+103] = PP_EXTRACT_ARGS(103, __VA_ARGS__), \
+        array[start_index+104] = PP_EXTRACT_ARGS(104, __VA_ARGS__), \
+        array[start_index+105] = PP_EXTRACT_ARGS(105, __VA_ARGS__), \
+        array[start_index+106] = PP_EXTRACT_ARGS(106, __VA_ARGS__), \
+        array[start_index+107] = PP_EXTRACT_ARGS(107, __VA_ARGS__), \
+        array[start_index+108] = PP_EXTRACT_ARGS(108, __VA_ARGS__), \
+        array[start_index+109] = PP_EXTRACT_ARGS(109, __VA_ARGS__), \
+        array[start_index+110] = PP_EXTRACT_ARGS(110, __VA_ARGS__), \
+        array[start_index+111] = PP_EXTRACT_ARGS(111, __VA_ARGS__), \
+        array[start_index+112] = PP_EXTRACT_ARGS(112, __VA_ARGS__), \
+        array[start_index+113] = PP_EXTRACT_ARGS(113, __VA_ARGS__), \
+        array[start_index+114] = PP_EXTRACT_ARGS(114, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_116(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        array[start_index+100] = PP_EXTRACT_ARGS(100, __VA_ARGS__), \
+        array[start_index+101] = PP_EXTRACT_ARGS(101, __VA_ARGS__), \
+        array[start_index+102] = PP_EXTRACT_ARGS(102, __VA_ARGS__), \
+        array[start_index+103] = PP_EXTRACT_ARGS(103, __VA_ARGS__), \
+        array[start_index+104] = PP_EXTRACT_ARGS(104, __VA_ARGS__), \
+        array[start_index+105] = PP_EXTRACT_ARGS(105, __VA_ARGS__), \
+        array[start_index+106] = PP_EXTRACT_ARGS(106, __VA_ARGS__), \
+        array[start_index+107] = PP_EXTRACT_ARGS(107, __VA_ARGS__), \
+        array[start_index+108] = PP_EXTRACT_ARGS(108, __VA_ARGS__), \
+        array[start_index+109] = PP_EXTRACT_ARGS(109, __VA_ARGS__), \
+        array[start_index+110] = PP_EXTRACT_ARGS(110, __VA_ARGS__), \
+        array[start_index+111] = PP_EXTRACT_ARGS(111, __VA_ARGS__), \
+        array[start_index+112] = PP_EXTRACT_ARGS(112, __VA_ARGS__), \
+        array[start_index+113] = PP_EXTRACT_ARGS(113, __VA_ARGS__), \
+        array[start_index+114] = PP_EXTRACT_ARGS(114, __VA_ARGS__), \
+        array[start_index+115] = PP_EXTRACT_ARGS(115, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_117(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        array[start_index+100] = PP_EXTRACT_ARGS(100, __VA_ARGS__), \
+        array[start_index+101] = PP_EXTRACT_ARGS(101, __VA_ARGS__), \
+        array[start_index+102] = PP_EXTRACT_ARGS(102, __VA_ARGS__), \
+        array[start_index+103] = PP_EXTRACT_ARGS(103, __VA_ARGS__), \
+        array[start_index+104] = PP_EXTRACT_ARGS(104, __VA_ARGS__), \
+        array[start_index+105] = PP_EXTRACT_ARGS(105, __VA_ARGS__), \
+        array[start_index+106] = PP_EXTRACT_ARGS(106, __VA_ARGS__), \
+        array[start_index+107] = PP_EXTRACT_ARGS(107, __VA_ARGS__), \
+        array[start_index+108] = PP_EXTRACT_ARGS(108, __VA_ARGS__), \
+        array[start_index+109] = PP_EXTRACT_ARGS(109, __VA_ARGS__), \
+        array[start_index+110] = PP_EXTRACT_ARGS(110, __VA_ARGS__), \
+        array[start_index+111] = PP_EXTRACT_ARGS(111, __VA_ARGS__), \
+        array[start_index+112] = PP_EXTRACT_ARGS(112, __VA_ARGS__), \
+        array[start_index+113] = PP_EXTRACT_ARGS(113, __VA_ARGS__), \
+        array[start_index+114] = PP_EXTRACT_ARGS(114, __VA_ARGS__), \
+        array[start_index+115] = PP_EXTRACT_ARGS(115, __VA_ARGS__), \
+        array[start_index+116] = PP_EXTRACT_ARGS(116, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_118(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        array[start_index+100] = PP_EXTRACT_ARGS(100, __VA_ARGS__), \
+        array[start_index+101] = PP_EXTRACT_ARGS(101, __VA_ARGS__), \
+        array[start_index+102] = PP_EXTRACT_ARGS(102, __VA_ARGS__), \
+        array[start_index+103] = PP_EXTRACT_ARGS(103, __VA_ARGS__), \
+        array[start_index+104] = PP_EXTRACT_ARGS(104, __VA_ARGS__), \
+        array[start_index+105] = PP_EXTRACT_ARGS(105, __VA_ARGS__), \
+        array[start_index+106] = PP_EXTRACT_ARGS(106, __VA_ARGS__), \
+        array[start_index+107] = PP_EXTRACT_ARGS(107, __VA_ARGS__), \
+        array[start_index+108] = PP_EXTRACT_ARGS(108, __VA_ARGS__), \
+        array[start_index+109] = PP_EXTRACT_ARGS(109, __VA_ARGS__), \
+        array[start_index+110] = PP_EXTRACT_ARGS(110, __VA_ARGS__), \
+        array[start_index+111] = PP_EXTRACT_ARGS(111, __VA_ARGS__), \
+        array[start_index+112] = PP_EXTRACT_ARGS(112, __VA_ARGS__), \
+        array[start_index+113] = PP_EXTRACT_ARGS(113, __VA_ARGS__), \
+        array[start_index+114] = PP_EXTRACT_ARGS(114, __VA_ARGS__), \
+        array[start_index+115] = PP_EXTRACT_ARGS(115, __VA_ARGS__), \
+        array[start_index+116] = PP_EXTRACT_ARGS(116, __VA_ARGS__), \
+        array[start_index+117] = PP_EXTRACT_ARGS(117, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_119(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        array[start_index+100] = PP_EXTRACT_ARGS(100, __VA_ARGS__), \
+        array[start_index+101] = PP_EXTRACT_ARGS(101, __VA_ARGS__), \
+        array[start_index+102] = PP_EXTRACT_ARGS(102, __VA_ARGS__), \
+        array[start_index+103] = PP_EXTRACT_ARGS(103, __VA_ARGS__), \
+        array[start_index+104] = PP_EXTRACT_ARGS(104, __VA_ARGS__), \
+        array[start_index+105] = PP_EXTRACT_ARGS(105, __VA_ARGS__), \
+        array[start_index+106] = PP_EXTRACT_ARGS(106, __VA_ARGS__), \
+        array[start_index+107] = PP_EXTRACT_ARGS(107, __VA_ARGS__), \
+        array[start_index+108] = PP_EXTRACT_ARGS(108, __VA_ARGS__), \
+        array[start_index+109] = PP_EXTRACT_ARGS(109, __VA_ARGS__), \
+        array[start_index+110] = PP_EXTRACT_ARGS(110, __VA_ARGS__), \
+        array[start_index+111] = PP_EXTRACT_ARGS(111, __VA_ARGS__), \
+        array[start_index+112] = PP_EXTRACT_ARGS(112, __VA_ARGS__), \
+        array[start_index+113] = PP_EXTRACT_ARGS(113, __VA_ARGS__), \
+        array[start_index+114] = PP_EXTRACT_ARGS(114, __VA_ARGS__), \
+        array[start_index+115] = PP_EXTRACT_ARGS(115, __VA_ARGS__), \
+        array[start_index+116] = PP_EXTRACT_ARGS(116, __VA_ARGS__), \
+        array[start_index+117] = PP_EXTRACT_ARGS(117, __VA_ARGS__), \
+        array[start_index+118] = PP_EXTRACT_ARGS(118, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_120(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        array[start_index+100] = PP_EXTRACT_ARGS(100, __VA_ARGS__), \
+        array[start_index+101] = PP_EXTRACT_ARGS(101, __VA_ARGS__), \
+        array[start_index+102] = PP_EXTRACT_ARGS(102, __VA_ARGS__), \
+        array[start_index+103] = PP_EXTRACT_ARGS(103, __VA_ARGS__), \
+        array[start_index+104] = PP_EXTRACT_ARGS(104, __VA_ARGS__), \
+        array[start_index+105] = PP_EXTRACT_ARGS(105, __VA_ARGS__), \
+        array[start_index+106] = PP_EXTRACT_ARGS(106, __VA_ARGS__), \
+        array[start_index+107] = PP_EXTRACT_ARGS(107, __VA_ARGS__), \
+        array[start_index+108] = PP_EXTRACT_ARGS(108, __VA_ARGS__), \
+        array[start_index+109] = PP_EXTRACT_ARGS(109, __VA_ARGS__), \
+        array[start_index+110] = PP_EXTRACT_ARGS(110, __VA_ARGS__), \
+        array[start_index+111] = PP_EXTRACT_ARGS(111, __VA_ARGS__), \
+        array[start_index+112] = PP_EXTRACT_ARGS(112, __VA_ARGS__), \
+        array[start_index+113] = PP_EXTRACT_ARGS(113, __VA_ARGS__), \
+        array[start_index+114] = PP_EXTRACT_ARGS(114, __VA_ARGS__), \
+        array[start_index+115] = PP_EXTRACT_ARGS(115, __VA_ARGS__), \
+        array[start_index+116] = PP_EXTRACT_ARGS(116, __VA_ARGS__), \
+        array[start_index+117] = PP_EXTRACT_ARGS(117, __VA_ARGS__), \
+        array[start_index+118] = PP_EXTRACT_ARGS(118, __VA_ARGS__), \
+        array[start_index+119] = PP_EXTRACT_ARGS(119, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_121(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        array[start_index+100] = PP_EXTRACT_ARGS(100, __VA_ARGS__), \
+        array[start_index+101] = PP_EXTRACT_ARGS(101, __VA_ARGS__), \
+        array[start_index+102] = PP_EXTRACT_ARGS(102, __VA_ARGS__), \
+        array[start_index+103] = PP_EXTRACT_ARGS(103, __VA_ARGS__), \
+        array[start_index+104] = PP_EXTRACT_ARGS(104, __VA_ARGS__), \
+        array[start_index+105] = PP_EXTRACT_ARGS(105, __VA_ARGS__), \
+        array[start_index+106] = PP_EXTRACT_ARGS(106, __VA_ARGS__), \
+        array[start_index+107] = PP_EXTRACT_ARGS(107, __VA_ARGS__), \
+        array[start_index+108] = PP_EXTRACT_ARGS(108, __VA_ARGS__), \
+        array[start_index+109] = PP_EXTRACT_ARGS(109, __VA_ARGS__), \
+        array[start_index+110] = PP_EXTRACT_ARGS(110, __VA_ARGS__), \
+        array[start_index+111] = PP_EXTRACT_ARGS(111, __VA_ARGS__), \
+        array[start_index+112] = PP_EXTRACT_ARGS(112, __VA_ARGS__), \
+        array[start_index+113] = PP_EXTRACT_ARGS(113, __VA_ARGS__), \
+        array[start_index+114] = PP_EXTRACT_ARGS(114, __VA_ARGS__), \
+        array[start_index+115] = PP_EXTRACT_ARGS(115, __VA_ARGS__), \
+        array[start_index+116] = PP_EXTRACT_ARGS(116, __VA_ARGS__), \
+        array[start_index+117] = PP_EXTRACT_ARGS(117, __VA_ARGS__), \
+        array[start_index+118] = PP_EXTRACT_ARGS(118, __VA_ARGS__), \
+        array[start_index+119] = PP_EXTRACT_ARGS(119, __VA_ARGS__), \
+        array[start_index+120] = PP_EXTRACT_ARGS(120, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_122(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        array[start_index+100] = PP_EXTRACT_ARGS(100, __VA_ARGS__), \
+        array[start_index+101] = PP_EXTRACT_ARGS(101, __VA_ARGS__), \
+        array[start_index+102] = PP_EXTRACT_ARGS(102, __VA_ARGS__), \
+        array[start_index+103] = PP_EXTRACT_ARGS(103, __VA_ARGS__), \
+        array[start_index+104] = PP_EXTRACT_ARGS(104, __VA_ARGS__), \
+        array[start_index+105] = PP_EXTRACT_ARGS(105, __VA_ARGS__), \
+        array[start_index+106] = PP_EXTRACT_ARGS(106, __VA_ARGS__), \
+        array[start_index+107] = PP_EXTRACT_ARGS(107, __VA_ARGS__), \
+        array[start_index+108] = PP_EXTRACT_ARGS(108, __VA_ARGS__), \
+        array[start_index+109] = PP_EXTRACT_ARGS(109, __VA_ARGS__), \
+        array[start_index+110] = PP_EXTRACT_ARGS(110, __VA_ARGS__), \
+        array[start_index+111] = PP_EXTRACT_ARGS(111, __VA_ARGS__), \
+        array[start_index+112] = PP_EXTRACT_ARGS(112, __VA_ARGS__), \
+        array[start_index+113] = PP_EXTRACT_ARGS(113, __VA_ARGS__), \
+        array[start_index+114] = PP_EXTRACT_ARGS(114, __VA_ARGS__), \
+        array[start_index+115] = PP_EXTRACT_ARGS(115, __VA_ARGS__), \
+        array[start_index+116] = PP_EXTRACT_ARGS(116, __VA_ARGS__), \
+        array[start_index+117] = PP_EXTRACT_ARGS(117, __VA_ARGS__), \
+        array[start_index+118] = PP_EXTRACT_ARGS(118, __VA_ARGS__), \
+        array[start_index+119] = PP_EXTRACT_ARGS(119, __VA_ARGS__), \
+        array[start_index+120] = PP_EXTRACT_ARGS(120, __VA_ARGS__), \
+        array[start_index+121] = PP_EXTRACT_ARGS(121, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_123(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        array[start_index+100] = PP_EXTRACT_ARGS(100, __VA_ARGS__), \
+        array[start_index+101] = PP_EXTRACT_ARGS(101, __VA_ARGS__), \
+        array[start_index+102] = PP_EXTRACT_ARGS(102, __VA_ARGS__), \
+        array[start_index+103] = PP_EXTRACT_ARGS(103, __VA_ARGS__), \
+        array[start_index+104] = PP_EXTRACT_ARGS(104, __VA_ARGS__), \
+        array[start_index+105] = PP_EXTRACT_ARGS(105, __VA_ARGS__), \
+        array[start_index+106] = PP_EXTRACT_ARGS(106, __VA_ARGS__), \
+        array[start_index+107] = PP_EXTRACT_ARGS(107, __VA_ARGS__), \
+        array[start_index+108] = PP_EXTRACT_ARGS(108, __VA_ARGS__), \
+        array[start_index+109] = PP_EXTRACT_ARGS(109, __VA_ARGS__), \
+        array[start_index+110] = PP_EXTRACT_ARGS(110, __VA_ARGS__), \
+        array[start_index+111] = PP_EXTRACT_ARGS(111, __VA_ARGS__), \
+        array[start_index+112] = PP_EXTRACT_ARGS(112, __VA_ARGS__), \
+        array[start_index+113] = PP_EXTRACT_ARGS(113, __VA_ARGS__), \
+        array[start_index+114] = PP_EXTRACT_ARGS(114, __VA_ARGS__), \
+        array[start_index+115] = PP_EXTRACT_ARGS(115, __VA_ARGS__), \
+        array[start_index+116] = PP_EXTRACT_ARGS(116, __VA_ARGS__), \
+        array[start_index+117] = PP_EXTRACT_ARGS(117, __VA_ARGS__), \
+        array[start_index+118] = PP_EXTRACT_ARGS(118, __VA_ARGS__), \
+        array[start_index+119] = PP_EXTRACT_ARGS(119, __VA_ARGS__), \
+        array[start_index+120] = PP_EXTRACT_ARGS(120, __VA_ARGS__), \
+        array[start_index+121] = PP_EXTRACT_ARGS(121, __VA_ARGS__), \
+        array[start_index+122] = PP_EXTRACT_ARGS(122, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_124(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        array[start_index+100] = PP_EXTRACT_ARGS(100, __VA_ARGS__), \
+        array[start_index+101] = PP_EXTRACT_ARGS(101, __VA_ARGS__), \
+        array[start_index+102] = PP_EXTRACT_ARGS(102, __VA_ARGS__), \
+        array[start_index+103] = PP_EXTRACT_ARGS(103, __VA_ARGS__), \
+        array[start_index+104] = PP_EXTRACT_ARGS(104, __VA_ARGS__), \
+        array[start_index+105] = PP_EXTRACT_ARGS(105, __VA_ARGS__), \
+        array[start_index+106] = PP_EXTRACT_ARGS(106, __VA_ARGS__), \
+        array[start_index+107] = PP_EXTRACT_ARGS(107, __VA_ARGS__), \
+        array[start_index+108] = PP_EXTRACT_ARGS(108, __VA_ARGS__), \
+        array[start_index+109] = PP_EXTRACT_ARGS(109, __VA_ARGS__), \
+        array[start_index+110] = PP_EXTRACT_ARGS(110, __VA_ARGS__), \
+        array[start_index+111] = PP_EXTRACT_ARGS(111, __VA_ARGS__), \
+        array[start_index+112] = PP_EXTRACT_ARGS(112, __VA_ARGS__), \
+        array[start_index+113] = PP_EXTRACT_ARGS(113, __VA_ARGS__), \
+        array[start_index+114] = PP_EXTRACT_ARGS(114, __VA_ARGS__), \
+        array[start_index+115] = PP_EXTRACT_ARGS(115, __VA_ARGS__), \
+        array[start_index+116] = PP_EXTRACT_ARGS(116, __VA_ARGS__), \
+        array[start_index+117] = PP_EXTRACT_ARGS(117, __VA_ARGS__), \
+        array[start_index+118] = PP_EXTRACT_ARGS(118, __VA_ARGS__), \
+        array[start_index+119] = PP_EXTRACT_ARGS(119, __VA_ARGS__), \
+        array[start_index+120] = PP_EXTRACT_ARGS(120, __VA_ARGS__), \
+        array[start_index+121] = PP_EXTRACT_ARGS(121, __VA_ARGS__), \
+        array[start_index+122] = PP_EXTRACT_ARGS(122, __VA_ARGS__), \
+        array[start_index+123] = PP_EXTRACT_ARGS(123, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_125(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        array[start_index+100] = PP_EXTRACT_ARGS(100, __VA_ARGS__), \
+        array[start_index+101] = PP_EXTRACT_ARGS(101, __VA_ARGS__), \
+        array[start_index+102] = PP_EXTRACT_ARGS(102, __VA_ARGS__), \
+        array[start_index+103] = PP_EXTRACT_ARGS(103, __VA_ARGS__), \
+        array[start_index+104] = PP_EXTRACT_ARGS(104, __VA_ARGS__), \
+        array[start_index+105] = PP_EXTRACT_ARGS(105, __VA_ARGS__), \
+        array[start_index+106] = PP_EXTRACT_ARGS(106, __VA_ARGS__), \
+        array[start_index+107] = PP_EXTRACT_ARGS(107, __VA_ARGS__), \
+        array[start_index+108] = PP_EXTRACT_ARGS(108, __VA_ARGS__), \
+        array[start_index+109] = PP_EXTRACT_ARGS(109, __VA_ARGS__), \
+        array[start_index+110] = PP_EXTRACT_ARGS(110, __VA_ARGS__), \
+        array[start_index+111] = PP_EXTRACT_ARGS(111, __VA_ARGS__), \
+        array[start_index+112] = PP_EXTRACT_ARGS(112, __VA_ARGS__), \
+        array[start_index+113] = PP_EXTRACT_ARGS(113, __VA_ARGS__), \
+        array[start_index+114] = PP_EXTRACT_ARGS(114, __VA_ARGS__), \
+        array[start_index+115] = PP_EXTRACT_ARGS(115, __VA_ARGS__), \
+        array[start_index+116] = PP_EXTRACT_ARGS(116, __VA_ARGS__), \
+        array[start_index+117] = PP_EXTRACT_ARGS(117, __VA_ARGS__), \
+        array[start_index+118] = PP_EXTRACT_ARGS(118, __VA_ARGS__), \
+        array[start_index+119] = PP_EXTRACT_ARGS(119, __VA_ARGS__), \
+        array[start_index+120] = PP_EXTRACT_ARGS(120, __VA_ARGS__), \
+        array[start_index+121] = PP_EXTRACT_ARGS(121, __VA_ARGS__), \
+        array[start_index+122] = PP_EXTRACT_ARGS(122, __VA_ARGS__), \
+        array[start_index+123] = PP_EXTRACT_ARGS(123, __VA_ARGS__), \
+        array[start_index+124] = PP_EXTRACT_ARGS(124, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_126(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        array[start_index+100] = PP_EXTRACT_ARGS(100, __VA_ARGS__), \
+        array[start_index+101] = PP_EXTRACT_ARGS(101, __VA_ARGS__), \
+        array[start_index+102] = PP_EXTRACT_ARGS(102, __VA_ARGS__), \
+        array[start_index+103] = PP_EXTRACT_ARGS(103, __VA_ARGS__), \
+        array[start_index+104] = PP_EXTRACT_ARGS(104, __VA_ARGS__), \
+        array[start_index+105] = PP_EXTRACT_ARGS(105, __VA_ARGS__), \
+        array[start_index+106] = PP_EXTRACT_ARGS(106, __VA_ARGS__), \
+        array[start_index+107] = PP_EXTRACT_ARGS(107, __VA_ARGS__), \
+        array[start_index+108] = PP_EXTRACT_ARGS(108, __VA_ARGS__), \
+        array[start_index+109] = PP_EXTRACT_ARGS(109, __VA_ARGS__), \
+        array[start_index+110] = PP_EXTRACT_ARGS(110, __VA_ARGS__), \
+        array[start_index+111] = PP_EXTRACT_ARGS(111, __VA_ARGS__), \
+        array[start_index+112] = PP_EXTRACT_ARGS(112, __VA_ARGS__), \
+        array[start_index+113] = PP_EXTRACT_ARGS(113, __VA_ARGS__), \
+        array[start_index+114] = PP_EXTRACT_ARGS(114, __VA_ARGS__), \
+        array[start_index+115] = PP_EXTRACT_ARGS(115, __VA_ARGS__), \
+        array[start_index+116] = PP_EXTRACT_ARGS(116, __VA_ARGS__), \
+        array[start_index+117] = PP_EXTRACT_ARGS(117, __VA_ARGS__), \
+        array[start_index+118] = PP_EXTRACT_ARGS(118, __VA_ARGS__), \
+        array[start_index+119] = PP_EXTRACT_ARGS(119, __VA_ARGS__), \
+        array[start_index+120] = PP_EXTRACT_ARGS(120, __VA_ARGS__), \
+        array[start_index+121] = PP_EXTRACT_ARGS(121, __VA_ARGS__), \
+        array[start_index+122] = PP_EXTRACT_ARGS(122, __VA_ARGS__), \
+        array[start_index+123] = PP_EXTRACT_ARGS(123, __VA_ARGS__), \
+        array[start_index+124] = PP_EXTRACT_ARGS(124, __VA_ARGS__), \
+        array[start_index+125] = PP_EXTRACT_ARGS(125, __VA_ARGS__), \
+        0))
+
+#define PP_UNROLL_ARRAY_ASSIGNMENT_127(array, start_index, ...) \
+    ((void)( \
+        array[start_index+0] = PP_EXTRACT_ARGS(0, __VA_ARGS__), \
+        array[start_index+1] = PP_EXTRACT_ARGS(1, __VA_ARGS__), \
+        array[start_index+2] = PP_EXTRACT_ARGS(2, __VA_ARGS__), \
+        array[start_index+3] = PP_EXTRACT_ARGS(3, __VA_ARGS__), \
+        array[start_index+4] = PP_EXTRACT_ARGS(4, __VA_ARGS__), \
+        array[start_index+5] = PP_EXTRACT_ARGS(5, __VA_ARGS__), \
+        array[start_index+6] = PP_EXTRACT_ARGS(6, __VA_ARGS__), \
+        array[start_index+7] = PP_EXTRACT_ARGS(7, __VA_ARGS__), \
+        array[start_index+8] = PP_EXTRACT_ARGS(8, __VA_ARGS__), \
+        array[start_index+9] = PP_EXTRACT_ARGS(9, __VA_ARGS__), \
+        array[start_index+10] = PP_EXTRACT_ARGS(10, __VA_ARGS__), \
+        array[start_index+11] = PP_EXTRACT_ARGS(11, __VA_ARGS__), \
+        array[start_index+12] = PP_EXTRACT_ARGS(12, __VA_ARGS__), \
+        array[start_index+13] = PP_EXTRACT_ARGS(13, __VA_ARGS__), \
+        array[start_index+14] = PP_EXTRACT_ARGS(14, __VA_ARGS__), \
+        array[start_index+15] = PP_EXTRACT_ARGS(15, __VA_ARGS__), \
+        array[start_index+16] = PP_EXTRACT_ARGS(16, __VA_ARGS__), \
+        array[start_index+17] = PP_EXTRACT_ARGS(17, __VA_ARGS__), \
+        array[start_index+18] = PP_EXTRACT_ARGS(18, __VA_ARGS__), \
+        array[start_index+19] = PP_EXTRACT_ARGS(19, __VA_ARGS__), \
+        array[start_index+20] = PP_EXTRACT_ARGS(20, __VA_ARGS__), \
+        array[start_index+21] = PP_EXTRACT_ARGS(21, __VA_ARGS__), \
+        array[start_index+22] = PP_EXTRACT_ARGS(22, __VA_ARGS__), \
+        array[start_index+23] = PP_EXTRACT_ARGS(23, __VA_ARGS__), \
+        array[start_index+24] = PP_EXTRACT_ARGS(24, __VA_ARGS__), \
+        array[start_index+25] = PP_EXTRACT_ARGS(25, __VA_ARGS__), \
+        array[start_index+26] = PP_EXTRACT_ARGS(26, __VA_ARGS__), \
+        array[start_index+27] = PP_EXTRACT_ARGS(27, __VA_ARGS__), \
+        array[start_index+28] = PP_EXTRACT_ARGS(28, __VA_ARGS__), \
+        array[start_index+29] = PP_EXTRACT_ARGS(29, __VA_ARGS__), \
+        array[start_index+30] = PP_EXTRACT_ARGS(30, __VA_ARGS__), \
+        array[start_index+31] = PP_EXTRACT_ARGS(31, __VA_ARGS__), \
+        array[start_index+32] = PP_EXTRACT_ARGS(32, __VA_ARGS__), \
+        array[start_index+33] = PP_EXTRACT_ARGS(33, __VA_ARGS__), \
+        array[start_index+34] = PP_EXTRACT_ARGS(34, __VA_ARGS__), \
+        array[start_index+35] = PP_EXTRACT_ARGS(35, __VA_ARGS__), \
+        array[start_index+36] = PP_EXTRACT_ARGS(36, __VA_ARGS__), \
+        array[start_index+37] = PP_EXTRACT_ARGS(37, __VA_ARGS__), \
+        array[start_index+38] = PP_EXTRACT_ARGS(38, __VA_ARGS__), \
+        array[start_index+39] = PP_EXTRACT_ARGS(39, __VA_ARGS__), \
+        array[start_index+40] = PP_EXTRACT_ARGS(40, __VA_ARGS__), \
+        array[start_index+41] = PP_EXTRACT_ARGS(41, __VA_ARGS__), \
+        array[start_index+42] = PP_EXTRACT_ARGS(42, __VA_ARGS__), \
+        array[start_index+43] = PP_EXTRACT_ARGS(43, __VA_ARGS__), \
+        array[start_index+44] = PP_EXTRACT_ARGS(44, __VA_ARGS__), \
+        array[start_index+45] = PP_EXTRACT_ARGS(45, __VA_ARGS__), \
+        array[start_index+46] = PP_EXTRACT_ARGS(46, __VA_ARGS__), \
+        array[start_index+47] = PP_EXTRACT_ARGS(47, __VA_ARGS__), \
+        array[start_index+48] = PP_EXTRACT_ARGS(48, __VA_ARGS__), \
+        array[start_index+49] = PP_EXTRACT_ARGS(49, __VA_ARGS__), \
+        array[start_index+50] = PP_EXTRACT_ARGS(50, __VA_ARGS__), \
+        array[start_index+51] = PP_EXTRACT_ARGS(51, __VA_ARGS__), \
+        array[start_index+52] = PP_EXTRACT_ARGS(52, __VA_ARGS__), \
+        array[start_index+53] = PP_EXTRACT_ARGS(53, __VA_ARGS__), \
+        array[start_index+54] = PP_EXTRACT_ARGS(54, __VA_ARGS__), \
+        array[start_index+55] = PP_EXTRACT_ARGS(55, __VA_ARGS__), \
+        array[start_index+56] = PP_EXTRACT_ARGS(56, __VA_ARGS__), \
+        array[start_index+57] = PP_EXTRACT_ARGS(57, __VA_ARGS__), \
+        array[start_index+58] = PP_EXTRACT_ARGS(58, __VA_ARGS__), \
+        array[start_index+59] = PP_EXTRACT_ARGS(59, __VA_ARGS__), \
+        array[start_index+60] = PP_EXTRACT_ARGS(60, __VA_ARGS__), \
+        array[start_index+61] = PP_EXTRACT_ARGS(61, __VA_ARGS__), \
+        array[start_index+62] = PP_EXTRACT_ARGS(62, __VA_ARGS__), \
+        array[start_index+63] = PP_EXTRACT_ARGS(63, __VA_ARGS__), \
+        array[start_index+64] = PP_EXTRACT_ARGS(64, __VA_ARGS__), \
+        array[start_index+65] = PP_EXTRACT_ARGS(65, __VA_ARGS__), \
+        array[start_index+66] = PP_EXTRACT_ARGS(66, __VA_ARGS__), \
+        array[start_index+67] = PP_EXTRACT_ARGS(67, __VA_ARGS__), \
+        array[start_index+68] = PP_EXTRACT_ARGS(68, __VA_ARGS__), \
+        array[start_index+69] = PP_EXTRACT_ARGS(69, __VA_ARGS__), \
+        array[start_index+70] = PP_EXTRACT_ARGS(70, __VA_ARGS__), \
+        array[start_index+71] = PP_EXTRACT_ARGS(71, __VA_ARGS__), \
+        array[start_index+72] = PP_EXTRACT_ARGS(72, __VA_ARGS__), \
+        array[start_index+73] = PP_EXTRACT_ARGS(73, __VA_ARGS__), \
+        array[start_index+74] = PP_EXTRACT_ARGS(74, __VA_ARGS__), \
+        array[start_index+75] = PP_EXTRACT_ARGS(75, __VA_ARGS__), \
+        array[start_index+76] = PP_EXTRACT_ARGS(76, __VA_ARGS__), \
+        array[start_index+77] = PP_EXTRACT_ARGS(77, __VA_ARGS__), \
+        array[start_index+78] = PP_EXTRACT_ARGS(78, __VA_ARGS__), \
+        array[start_index+79] = PP_EXTRACT_ARGS(79, __VA_ARGS__), \
+        array[start_index+80] = PP_EXTRACT_ARGS(80, __VA_ARGS__), \
+        array[start_index+81] = PP_EXTRACT_ARGS(81, __VA_ARGS__), \
+        array[start_index+82] = PP_EXTRACT_ARGS(82, __VA_ARGS__), \
+        array[start_index+83] = PP_EXTRACT_ARGS(83, __VA_ARGS__), \
+        array[start_index+84] = PP_EXTRACT_ARGS(84, __VA_ARGS__), \
+        array[start_index+85] = PP_EXTRACT_ARGS(85, __VA_ARGS__), \
+        array[start_index+86] = PP_EXTRACT_ARGS(86, __VA_ARGS__), \
+        array[start_index+87] = PP_EXTRACT_ARGS(87, __VA_ARGS__), \
+        array[start_index+88] = PP_EXTRACT_ARGS(88, __VA_ARGS__), \
+        array[start_index+89] = PP_EXTRACT_ARGS(89, __VA_ARGS__), \
+        array[start_index+90] = PP_EXTRACT_ARGS(90, __VA_ARGS__), \
+        array[start_index+91] = PP_EXTRACT_ARGS(91, __VA_ARGS__), \
+        array[start_index+92] = PP_EXTRACT_ARGS(92, __VA_ARGS__), \
+        array[start_index+93] = PP_EXTRACT_ARGS(93, __VA_ARGS__), \
+        array[start_index+94] = PP_EXTRACT_ARGS(94, __VA_ARGS__), \
+        array[start_index+95] = PP_EXTRACT_ARGS(95, __VA_ARGS__), \
+        array[start_index+96] = PP_EXTRACT_ARGS(96, __VA_ARGS__), \
+        array[start_index+97] = PP_EXTRACT_ARGS(97, __VA_ARGS__), \
+        array[start_index+98] = PP_EXTRACT_ARGS(98, __VA_ARGS__), \
+        array[start_index+99] = PP_EXTRACT_ARGS(99, __VA_ARGS__), \
+        array[start_index+100] = PP_EXTRACT_ARGS(100, __VA_ARGS__), \
+        array[start_index+101] = PP_EXTRACT_ARGS(101, __VA_ARGS__), \
+        array[start_index+102] = PP_EXTRACT_ARGS(102, __VA_ARGS__), \
+        array[start_index+103] = PP_EXTRACT_ARGS(103, __VA_ARGS__), \
+        array[start_index+104] = PP_EXTRACT_ARGS(104, __VA_ARGS__), \
+        array[start_index+105] = PP_EXTRACT_ARGS(105, __VA_ARGS__), \
+        array[start_index+106] = PP_EXTRACT_ARGS(106, __VA_ARGS__), \
+        array[start_index+107] = PP_EXTRACT_ARGS(107, __VA_ARGS__), \
+        array[start_index+108] = PP_EXTRACT_ARGS(108, __VA_ARGS__), \
+        array[start_index+109] = PP_EXTRACT_ARGS(109, __VA_ARGS__), \
+        array[start_index+110] = PP_EXTRACT_ARGS(110, __VA_ARGS__), \
+        array[start_index+111] = PP_EXTRACT_ARGS(111, __VA_ARGS__), \
+        array[start_index+112] = PP_EXTRACT_ARGS(112, __VA_ARGS__), \
+        array[start_index+113] = PP_EXTRACT_ARGS(113, __VA_ARGS__), \
+        array[start_index+114] = PP_EXTRACT_ARGS(114, __VA_ARGS__), \
+        array[start_index+115] = PP_EXTRACT_ARGS(115, __VA_ARGS__), \
+        array[start_index+116] = PP_EXTRACT_ARGS(116, __VA_ARGS__), \
+        array[start_index+117] = PP_EXTRACT_ARGS(117, __VA_ARGS__), \
+        array[start_index+118] = PP_EXTRACT_ARGS(118, __VA_ARGS__), \
+        array[start_index+119] = PP_EXTRACT_ARGS(119, __VA_ARGS__), \
+        array[start_index+120] = PP_EXTRACT_ARGS(120, __VA_ARGS__), \
+        array[start_index+121] = PP_EXTRACT_ARGS(121, __VA_ARGS__), \
+        array[start_index+122] = PP_EXTRACT_ARGS(122, __VA_ARGS__), \
+        array[start_index+123] = PP_EXTRACT_ARGS(123, __VA_ARGS__), \
+        array[start_index+124] = PP_EXTRACT_ARGS(124, __VA_ARGS__), \
+        array[start_index+125] = PP_EXTRACT_ARGS(125, __VA_ARGS__), \
+        array[start_index+126] = PP_EXTRACT_ARGS(126, __VA_ARGS__), \
+        0))
+
+#define PP_LOOP_CONCAT(a, b, ...) a##b(__VA_ARGS__)
+#define PP_LOOP_FROM(array, start_index, ...) PP_LOOP_HELPER(array, start_index, PP_NARG(__VA_ARGS__), __VA_ARGS__)
+#define PP_LOOP_HELPER(array, start_index, num_args, ...) PP_LOOP_CONCAT(PP_UNROLL_ARRAY_ASSIGNMENT_, num_args, array, start_index, __VA_ARGS__)
+
+#endif
