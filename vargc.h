@@ -1,6 +1,9 @@
 #ifndef PP_MACROS_DEF_H
 
-#include "PP_ARRAY_COPY.h"
+#include "/home/james/c/macros/global_macros.h"
+#include "/home/james/c/jarray/generic.h"
+
+/* #include "PP_ARRAY_COPY.h" */
 #define PP_ISDIGIT(c) ((c) >= 48 && (c) <= 57)
 #define PP_GET_FIRST_ARG(...) PP_FIRST_ARG(__VA_ARGS__)
 #define PP_FIRST_ARG(first, ...) first
@@ -325,13 +328,13 @@
 
 #define PP_EXPAND(x) x
 
-#define pp_cout(x) _Generic((x),   \
-	char: printf("%c\n", x),   \
-	char*: printf("%s\n", x),  \
-	int: printf("%d\n", x),    \
-	double: printf("%f\n", x), \
-	float: printf("%f\n", x),  \
-	void*: printf("%p\n", x)   \
+#define pp_cout(x) _Generic((x),  \
+	char: printf("%c\n", x),  \
+	char*: printf("%s\n", x), \
+	int: printf("%d\n", x),   \
+	double: printf("%f\n", x),\
+	float: printf("%f\n", x), \
+	void*: printf("%p\n", x)  \
 	)
 
 #define PP_LOOP_ARGS_START(do_thing, num_args, ...) do_thing PP_EXTRACT_ARGS_##num_args(__VA_ARGS__)
